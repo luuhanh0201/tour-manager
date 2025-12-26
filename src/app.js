@@ -3,7 +3,6 @@ import dotenv from "dotenv";
 import cors from "cors";
 import router from "./routes/index.js";
 import { errorHandler } from "./middlewares/handleError.middleware.js";
-console.log("APP START MARKER 123");
 
 dotenv.config()
 const PORT = process.env.MY_PORT || 3000

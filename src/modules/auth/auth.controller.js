@@ -26,7 +26,6 @@ export const signIn = async (req, res, next) => {
         const refreshToken = signRefreshToken({ id: user.id })
         const refreshToKenHash = hashToken(refreshToken)
         const expiresAt = addDays(REFRESH_DAYS);
-        console.log(expiresAt)
         await createAccessTokenModel({ userId: id, refreshToKenHash: refreshToKenHash, expiresAt: expiresAt, ip, userAgent })
         return res.status(200).json({
             message: "Đăng nhập thành công",
@@ -91,7 +90,7 @@ export const refreshToken = async (req, res, next) => {
             error.status = 400
             throw error
         }
-        return res.json({ accessToken: newAccessToken, refreshToken: newHash });
+        return res.json({ accessToken: newAccessToken, refreshToken: newRefreshToken });
     } catch (error) {
         next(error)
     }
