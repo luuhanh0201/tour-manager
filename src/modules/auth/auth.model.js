@@ -10,6 +10,18 @@ export const findUsernameModel = async ({ username = "", email = "" } = {}) => {
         user, exists: !!user
     }
 }
+export const findUserByIdModel = async (id) => {
+    const sql = "SELECT * FROM users WHERE id = ? LIMIT 1";
+    const [rows] = await poolConnection.query(sql, [id])
+    const user = rows[0] || null
+    if (!user) {
+        return { user: null, exist: false }
+    }
+    const { password_hash, ...safeUser } = user
+    return {
+        user: safeUser, exist: !!user
+    }
+}
 export const createUserModel = async ({ username, fullName, email, password }) => {
     const sql = "INSERT INTO users(username,full_name,email,password_hash) VALUES (?,?,?,?)"
     const [row] = await poolConnection.query(sql, [username, fullName, email, password])

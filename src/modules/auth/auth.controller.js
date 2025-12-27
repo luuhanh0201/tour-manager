@@ -22,7 +22,7 @@ export const signIn = async (req, res, next) => {
 
         const user = await signInService(body)
         const { id } = user
-        const accessToken = signAccessToken({ id: user.id, username: user.username })
+        const accessToken = signAccessToken({ id: user.id, username: user.username, role: user.role })
         const refreshToken = signRefreshToken({ id: user.id })
         const refreshToKenHash = hashToken(refreshToken)
         const expiresAt = addDays(REFRESH_DAYS);
